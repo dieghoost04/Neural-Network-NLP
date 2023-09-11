@@ -7,10 +7,10 @@ Este contiene una lista de diferentes reseñas para diferentes películas, y su 
 Para esta implementación se utilizó la librería de tensorflow para el entrenamiento del modelo, y también se utilizaron las bibliotecas de preprocessing de keras, para poder hacer los tokens para las palabras y demás cosas que se necesitan para entrenar un modelo de NLP.
 
 
-##Subcompetencia
+## Subcompetencia
 	
 
-##Indicador SMA0401A
+## Indicador SMA0401A
 	
 
 Usa un marco de trabajo o framework para implementar una técnica o algoritmo de aprendizaje máquina como: regresiones, árboles, clusters, etc...

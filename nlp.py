@@ -12,15 +12,24 @@ from tensorflow.keras.layers import Embedding, GlobalAveragePooling1D, Dense, Dr
 from tensorflow.keras.regularizers import l2
 
 # Guardamos los datos en los dataframes.
-df_train_pre = pd.read_csv('train.csv')
+
+input_train1_file = 'train1.csv'
+input_train2_file = 'train2.csv'
+input_test1_file = 'test1.csv'
+input_test2_file = 'test2.csv'
+
+train_data1 = pd.read_csv(input_train1_file)
+train_data2 = pd.read_csv(input_train2_file)
+
+df_train_pre = pd.concat([train_data1, train_data2], ignore_index=True)
+
+test_data1 = pd.read_csv(input_test1_file)
+test_data2 = pd.read_csv(input_test2_file)
+
+test_df = pd.concat([test_data1, test_data2], ignore_index=True)
+
 df_train_pre = df_train_pre.dropna()
-
-test_df = pd.read_csv('test.csv')
-
-df_train_pre = pd.read_csv('train.csv')
-df_train_pre = df_train_pre.dropna()
-
-test_df = pd.read_csv('test.csv')
+test_df = test_df.dropna()
 
 # Iniciamos la clase para nuestro de modelo de NLP
 class nlp:
@@ -44,7 +53,7 @@ class nlp:
         self.test_data = test[self.text]
         self.test_l = label_encoder.fit_transform(test[self.clase])
     
-    def token(self, vocab_size = 10000, embedding_dim = 16, max_length = 100, trunc_type='post', padding_type='post', 
+    def token(self, vocab_size = 20000, embedding_dim = 100, max_length = 100, trunc_type='post', padding_type='post', 
               oov_tok = "<OOV>",training_size = 20000):
         # Iniciamos el objeto Tokenizer con los parámetros por default que tiene el método de nuestra clase.
         self.tokenizer = Tokenizer(num_words=vocab_size, oov_token=oov_tok)
@@ -64,7 +73,7 @@ class nlp:
         test_sequences = self.tokenizer.texts_to_sequences(self.test_data)
         self.test_padded = pad_sequences(test_sequences, maxlen=max_length, padding=padding_type, truncating=trunc_type)
 
-    def model(self, vocab_size = 10000, embedding_dim = 16, max_length = 100, trunc_type='post', padding_type='post', 
+    def model(self, vocab_size = 20000, embedding_dim = 100, max_length = 100, trunc_type='post', padding_type='post', 
               oov_tok = "<OOV>",training_size = 20000):
         self.model = tf.keras.Sequential([
             # Hacemos embedding de nuestras secuencias.
